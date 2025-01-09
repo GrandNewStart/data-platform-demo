@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Screen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .action-bar {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .profile span {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .menu-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .menu-options {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .menu-options ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu-options li {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .menu-options li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .menu-options li:hover {
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .form-container {
+            width: 100%; 
+            padding: 20px;
+            box-sizing: border-box; 
+            overflow: hidden; 
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="range"],
+        select {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            margin-bottom: 8px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Action Bar -->
+    <div class="action-bar">
+        <div class="profile">
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile Image">
+            <span id="username">User Name</span>
+        </div>
+        <button id="menuButton" class="menu-button">☰</button>
+        <div id="menuOptions" class="menu-options hidden">
+            <ul>
+                <li><a href="main.html">Submission Page</a></li>
+                <li><a href="orders.html">Orders Page</a></li>
+                <li><a href="index.html" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="form-container">
+        <form id="mainForm">
+            <!-- Form A -->
+            <div class="form-group">
+                <label for="formA">A (True/False)</label>
+                <select id="formA" required>
+                    <option value="">Select...</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </div>
+
+            <!-- Form B -->
+            <div class="form-group">
+                <label for="formB">B (Text)</label>
+                <input type="text" id="formB" placeholder="Enter text" required>
+            </div>
+
+            <!-- Form C -->
+            <div class="form-group">
+                <label>C (Range)</label>
+                <input type="number" id="formCMin" placeholder="Min value" min="0">
+                <input type="number" id="formCMax" placeholder="Max value" min="0">
+            </div>
+
+            <button type="submit" id="submitButton" disabled>Submit</button>
+        </form>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
