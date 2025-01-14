@@ -6,7 +6,8 @@ import '../models/key_pair.dart';
 import 'app_state.dart';
 
 class Api {
-  static const host = 'https://552e-221-147-34-162.ngrok-free.app';
+  // CHANGE THE HOST ADDRESS
+  static const host = 'http://localhost:8080';
 
   static Future<Map<String, dynamic>> login(String name, KeyPair kp) async {
     final url = Uri.parse('$host/client');
