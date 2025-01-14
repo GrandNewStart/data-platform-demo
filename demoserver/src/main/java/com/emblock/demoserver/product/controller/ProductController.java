@@ -72,16 +72,13 @@ public class ProductController {
     @PostMapping("/consume")
     public ResponseEntity<ConsumeProductResDto> consumeProduct(@RequestBody ConsumeProductReqDto req) {
         try {
-            List<Product> products = productService.consumeProducts(req.getConsumer(), req.getOrderId());
-            List<ConsumeProductResDto.Data> data = products
-                    .stream()
-                    .map(e -> new ConsumeProductResDto.Data(
-                            e.getId(),
-                            e.getSender(),
-                            e.getData(),
-                            e.getCreatedAt()
-                    ))
-                    .toList();
+            Product product = productService.consumeProduct(req.getConsumer(), req.getProductId());
+            ConsumeProductResDto.Data data = new ConsumeProductResDto.Data(
+                    product.getId(),
+                    product.getSender(),
+                    product.getData(),
+                    product.getCreatedAt()
+            );
             ConsumeProductResDto body = new ConsumeProductResDto(200, "Data consume success", data);
             return ResponseEntity
                     .status(HttpStatus.OK)

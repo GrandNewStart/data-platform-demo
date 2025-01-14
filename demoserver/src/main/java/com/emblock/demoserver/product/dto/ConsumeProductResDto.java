@@ -3,14 +3,12 @@ package com.emblock.demoserver.product.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 public class ConsumeProductResDto {
     private int code;
     private String message;
-    private List<Data> data;
+    private Data data;
 
     @lombok.Data
     @AllArgsConstructor

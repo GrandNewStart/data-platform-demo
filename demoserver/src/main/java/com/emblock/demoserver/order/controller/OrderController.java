@@ -2,10 +2,7 @@ package com.emblock.demoserver.order.controller;
 
 import com.emblock.demoserver.comm.DemoException;
 import com.emblock.demoserver.order.domain.Order;
-import com.emblock.demoserver.order.dto.GetOrderListResDto;
-import com.emblock.demoserver.order.dto.GetOrderResDto;
-import com.emblock.demoserver.order.dto.OrderReqDto;
-import com.emblock.demoserver.order.dto.OrderResDto;
+import com.emblock.demoserver.order.dto.*;
 import com.emblock.demoserver.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/order")
@@ -72,6 +70,39 @@ public class OrderController {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(new GetOrderListResDto(e.getCode(), e.getMsg(), null));
+        }
+    }
+
+    @PostMapping("/list")
+    public ResponseEntity<GetOrderListResDto> getMyOrders(@RequestBody Map<String, String> requestData) {
+        try {
+            String publicKey = requestData.get("publicKey");
+            List<Order> orders = orderService.getOrdersBySender(publicKey);
+            List<GetOrderListResDto.Data> data = orders.stream().map(e ->
+                    new GetOrderListResDto.Data(e.getId(), e.getSender(), e.getQueries())
+            ).toList();
+            GetOrderListResDto body = new GetOrderListResDto(200, "Order fetch success", data);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(body);
+        } catch (DemoException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new GetOrderListResDto(e.getCode(), e.getMsg(), null));
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<DeleteOrderResDto> deleteOrder(@RequestBody DeleteOrderReqDto req) {
+        try {
+            orderService.deleteOrder(req.getPublicKey(), req.getOrderId());
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new DeleteOrderResDto(200, "Order delete success"));
+        } catch (DemoException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new DeleteOrderResDto(e.getCode(), e.getMsg()));
         }
     }
 

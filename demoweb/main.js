@@ -12,7 +12,6 @@ const menuButton = document.getElementById('menuButton');
 const menuOptions = document.getElementById('menuOptions');
 
 menuButton.addEventListener('click', () => {
-    console.log('Menu button clicked');
     menuOptions.classList.toggle('hidden');
 });
 

@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public List<Product> consumeProducts(String consumerId, String orderId) throws DemoException {
+    public Product consumeProduct(String consumerId, String productId) throws DemoException {
         Client consumer = clientRepository.findById(consumerId).orElse(null);
         if (consumer == null) {
             throw DemoException.CLIENT_NOT_FOUND;
@@ -77,6 +77,11 @@ public class ProductServiceImpl implements ProductService {
         if (consumer.getType() != ClientType.CONSUMER.getValue()) {
             throw DemoException.INVALID_CLIENT_TYPE;
         }
+        Product product = productRepository.findById(productId).orElse(null);
+        if (product == null) {
+            throw DemoException.PRODUCT_NOT_FOUND;
+        }
+        String orderId = product.getOrderId();
         Order order = orderRepository.findById(orderId).orElse(null);
         if (order == null) {
             throw DemoException.ORDER_NOT_FOUND;
@@ -84,17 +89,11 @@ public class ProductServiceImpl implements ProductService {
         if (!Objects.equals(order.getSender(), consumer.getPublicKey())) {
             throw DemoException.CLIENT_NOT_ALLOWED;
         }
-        List<Product> result;
         try {
-            result = productRepository.findByOrderId(orderId);
-        } catch (Exception e) {
-            throw DemoException.PRODUCT_FETCH_FAILED;
-        }
-        try {
-            productRepository.deleteAllByOrderId(orderId);
+            productRepository.deleteById(productId);
         } catch (Exception e) {
             throw DemoException.PRODUCT_CONSUME_FAILED;
         }
-        return result;
+        return product;
     }
 }

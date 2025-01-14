@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class ConsumeProductReqDto {
     private String consumer;
-    private String orderId;
+    private String productId;
 }

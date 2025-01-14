@@ -12,4 +12,7 @@ public interface OrderService {
     Order getOrder(String id) throws DemoException;
 
     List<Order> getPagedOrders(int page, int size) throws DemoException;
+
+    List<Order> getOrdersBySender(String publicKey) throws DemoException;
+    void deleteOrder(String publicKey, String orderId) throws DemoException;
 }
