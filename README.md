@@ -30,3 +30,8 @@
 
 ## Major Logics
 ![major logics](./architectures/data-sales-platform.jpg)
+
+---
+
+## Data Sales Scenario
+![major logics](./architectures/scenario.png)

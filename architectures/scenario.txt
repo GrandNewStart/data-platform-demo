@@ -1,0 +1,36 @@
+title Data Sales Scenario
+
+
+Consumer(web) -> Server: Request data
+activate Server
+Server->Server: Validate the request
+Server->Server: Create and save the **Order**
+Consumer(web) <-- Server: Return **Order**
+deactivate Server
+
+note over Consumer(web), Provider(app): some time later...
+
+Provider(app) -> Server: Request **Requests**
+Provider(app) <-- Server: Return **Requests**
+Provider(app) -> Provider(app): Filter requests
+Provider(app) -> User: Display **Requests**
+Provider(app) <- User: Select **Request**
+Provider(app) -> Server: Provide data
+activate Server
+Server -> Server: Validate the data
+Server -> Server: Create and save the **Product**
+deactivate Server
+
+note over Consumer(web), Provider(app): some time later...
+
+Consumer(web) -> Server: Request **Products**
+activate Server
+Server -> Server: Validate access
+Consumer(web) <-- Server: Return **Products**
+deactivate Server
+Consumer(web) -> Server: Consume a **Product**
+activate Server
+Server -> Server: Delete **Product**
+Consumer(web) <- Server: Return **Product**
+deactivate Server
+Consumer(web) -> Consumer(web): Download data
